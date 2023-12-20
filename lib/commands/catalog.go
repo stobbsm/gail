@@ -12,7 +12,6 @@ type Command interface {
 	Handle(args ...string) response.CommandResponse
 }
 
-type Ehlo struct{}
 type Helo struct{}
 type Mail struct{}
 type Rcpt struct{}

@@ -3,6 +3,7 @@ package response
 import (
 	"fmt"
 	"io"
+	"log"
 	"strings"
 )
 
@@ -42,10 +43,16 @@ func (s *SMTPResponse) Msg() []string { return s.msg }
 func (s *SMTPResponse) String() string {
 	var b strings.Builder
 	if err := WriteSMTPResponse(&b, s.code, s.msg...); err != nil {
-
-		return TransactionFailed.Error()
+		log.Println(err)
 	}
 	return b.String()
+}
+
+func (s *SMTPResponse) append(msg ...string) *SMTPResponse {
+	for _, m := range msg {
+		s.msg = append(s.msg, m)
+	}
+	return s
 }
 
 // WriteSMTPResponse uses the code and builds the given lines, as strings,
